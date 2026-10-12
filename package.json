@@ -1,0 +1,31 @@
+{
+  "name": "lifesci-hub",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "生命科学前沿 LifeSciHub · 顶刊资讯、新兴技术与科研社区平台",
+  "scripts": {
+    "dev:server": "node server/index.js",
+    "dev:web": "vite",
+    "build": "vite build",
+    "test": "node --test",
+    "start": "node server/index.js",
+    "update": "node server/update-now.js",
+    "backup": "node server/backup-now.js",
+    "package": "node server/pack.js",
+    "repair:journals": "node server/repair-journals.js"
+  },
+  "dependencies": {
+    "@bdtrans/trans-cli": "^1.1.2",
+    "compression": "^1.8.2",
+    "docx": "^9.7.1",
+    "express": "^4.19.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
+  }
+}

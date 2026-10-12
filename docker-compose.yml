@@ -1,0 +1,14 @@
+services:
+  lifesci:
+    build: .
+    container_name: lifesci-hub
+    ports:
+      - "3000:3000"
+    environment:
+      - PUBLIC_MODE=1          # 公开模式：无演示账号，首个注册用户为管理员
+      - SESSION_TTL_DAYS=7
+      - UPDATE_INTERVAL_HOURS=12
+      - TRUST_PROXY=1          # 如直接暴露（不经反代），请改为 0
+    volumes:
+      - ./data:/app/data       # 数据库与备份持久化
+    restart: unless-stopped
