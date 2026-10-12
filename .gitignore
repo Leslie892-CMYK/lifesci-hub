@@ -1,6 +1,13 @@
 node_modules/
 dist/
-data/db.json
+# Production data, user hashes, sessions, reports and translation caches.
+/data/
+/outputs/
+*.log
+*.zip
+.dev.vars
+.env.*
+!.env.example
 .DS_Store
 .env
 

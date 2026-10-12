@@ -1,3 +1,5 @@
+GitHub 公开仓库请优先阅读 README.md；此文件保留原本地交付说明，密码文件和数据快照不会上传到 GitHub。
+
 生命科学前沿 LifeSciHub · Cloudflare 完整站交付
 
 固定网址：https://lifesci-hub.pages.dev

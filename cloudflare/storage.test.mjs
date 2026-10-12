@@ -50,7 +50,8 @@ test('core journal classification and report generation preserve history and exc
   const bootstrap = JSON.parse(await readFile(new URL('./generated/bootstrap.json', import.meta.url), 'utf8'));
   for (const file of bootstrap.files) writeFileSync(file.path, Buffer.from(file.body, 'base64'));
   const backend = await import('./generated/app.js');
-  assert.equal(backend.getDb().articles.length, 592);
+  const initialDb = JSON.parse(Buffer.from(bootstrap.files.find((file) => file.path === '/lifesci/data/db.json').body, 'base64').toString());
+  assert.equal(backend.getDb().articles.length, initialDb.articles.length);
   for (const title of ['Advanced Science', 'GeroScience', 'British Journal of Ophthalmology', 'American Journal of Ophthalmology', 'Ophthalmology Science']) assert.equal(backend.journalMeta(title).target, false, title);
   assert.equal(backend.journalMeta('Science (New York, N.Y.)').journal, 'Science');
   const originals = backend.getDb().articles.map((article) => [article.id, article.title]);

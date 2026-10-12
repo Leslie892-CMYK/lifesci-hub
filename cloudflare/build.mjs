@@ -3,19 +3,17 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
+import { buildSeed } from '../server/seed.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(here);
 const generated = path.join(here, 'generated');
 fs.mkdirSync(generated, { recursive: true });
-const db = JSON.parse(fs.readFileSync(path.join(root, 'data/db.json'), 'utf8'));
+const dataFile = path.join(root, 'data/db.json');
+// Public clones contain source only. A supplied private snapshot is optional;
+// otherwise initialize the same public seed used by the Node server.
+const db = fs.existsSync(dataFile) ? JSON.parse(fs.readFileSync(dataFile, 'utf8')) : buildSeed({ publicMode: true });
 const credentialFile = process.env.LIFESCI_ACCOUNT_FILE || path.join(here, 'private/accounts.json');
-const priorCredentialFile = path.resolve(root, '../../outputs/cloudflare-accounts.json');
-if (!fs.existsSync(credentialFile) && fs.existsSync(priorCredentialFile)) {
-  fs.mkdirSync(path.dirname(credentialFile), { recursive: true });
-  fs.copyFileSync(priorCredentialFile, credentialFile);
-  fs.chmodSync(credentialFile, 0o600);
-}
 let accounts;
 if (fs.existsSync(credentialFile)) accounts = JSON.parse(fs.readFileSync(credentialFile, 'utf8'));
 else {
@@ -35,6 +33,7 @@ db.meta.ophSyncing = false;
 db.meta.publicMode = true;
 const files = [{ path: '/lifesci/data/db.json', body: Buffer.from(JSON.stringify(db)).toString('base64') }];
 function visit(dir) {
+  if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) visit(full);
