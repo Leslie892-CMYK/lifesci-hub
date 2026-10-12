@@ -3,3 +3,11 @@ dist/
 data/db.json
 .DS_Store
 .env
+
+.wrangler/
+cloudflare/generated/
+cloudflare/deploy-build/
+cloudflare/cloudflare/
+cloudflare/private/
+**/.env
+**/.dev.vars

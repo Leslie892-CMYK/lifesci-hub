@@ -1,0 +1,12 @@
+{
+  "name": "lifesci-hub-backend",
+  "main": "worker.js",
+  "minify": true,
+  "compatibility_date": "2026-07-02",
+  "compatibility_flags": ["nodejs_compat", "enable_nodejs_http_server_modules"],
+  "workers_dev": false,
+  "durable_objects": { "bindings": [{ "name": "LIFESCI_APP", "class_name": "LifeSciApp" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["LifeSciApp"] }],
+  "triggers": { "crons": ["0 0,12 * * *"] },
+  "vars": { "PUBLIC_MODE": "1", "TRUST_PROXY": "1", "BACKUP_KEEP": "20", "OPH_LOOKBACK_DAYS": "1" }
+}

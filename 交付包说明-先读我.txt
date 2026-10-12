@@ -1,32 +1,17 @@
-生命科学前沿 LifeSciHub · 交付包说明
-=====================================
+生命科学前沿 LifeSciHub · Cloudflare 完整站交付
 
-一、这个包里有什么
-  server/            后端源码（Node + Express，66 个接口）
-  src/               前端源码（React 18 + Vite）
-  data/db.json       数据快照（已脱敏：登录会话已清空）
-  data/reports/      眼科AI日报 docx 样例（按日期存放）
-  交付文档.md         ★完整交付文档（架构/配置/数据模型/需求对照/待办/接手约定）
-  README.md           功能说明、演示账号、部署方式
-  DEPLOY.md           部署运维（Docker / systemd / 域名 HTTPS）
-  .env.example        环境变量模板（复制为 .env，填入 TRANS_API_KEY）
+固定网址：https://lifesci-hub.pages.dev
+后台：https://lifesci-hub.pages.dev/admin
 
-二、怎么跑起来（3 步）
-  npm install
-  cp .env.example .env      # 填写 PUBLIC_MODE 与 TRANS_API_KEY（百度翻译 Key）
-  npm run build && npm start
-  浏览器打开 http://localhost:3000
-  演示账号：admin / admin123（管理员）、editor / editor123（编辑）
+优先阅读 CLOUDFLARE.md，原交付文档.md 保留作原项目参考。
+原文档提到的 admin/admin123 已不适用于这个公开站。
+当前管理员用户名：admin；强密码另存于交付目录 cloudflare-accounts.json。
+密码文件和百度 API Key 均不包含在源码包中。
 
-三、注意事项
-  1. 包内不含 .env（里面有百度翻译 API Key，需要自己申请后填入）
-     Key 申请：https://fanyi-api.baidu.com/ → 开发者中心 → 通用翻译 → 实名认证 → apiKey 页面
-  2. 包内不含 node_modules 与 dist，需通过 npm install / npm run build 生成
-  3. 眼睛AI日报默认每天 8:00 自动执行（时区跟随系统），生成到 data/reports/日期/
-  4. 修改代码前请先看《交付文档.md》第 10 章「接手约定」，避免踩已知的坑
-
-四、先看哪些文件
-  想了解整体       → 交付文档.md 第 1-3 章
-  想接手开发       → 交付文档.md 第 9-10 章（待办 + 接手约定）
-  想做眼科AI模块   → 交付文档.md 第 7 章 + server/oph.js
-  想调翻译         → 交付文档.md 第 5.2 章 + server/translate.js
+包内保留 React/Express 原源码，并提供 Pages Functions、Worker、
+Durable Object SQLite 持久化和 Cloudflare 定时任务适配。
+数据快照保留原有论文、社区等数据，清空登录会话。
+本地运行：npm ci && cp .env.example .env && npm run build && npm start
+Cloudflare 构建：npm run build:cloudflare
+Cloudflare 测试：npm run test:cloudflare（Node 22.13+）
+部署、备份、翻译凭据配置和已知限制见 CLOUDFLARE.md。
